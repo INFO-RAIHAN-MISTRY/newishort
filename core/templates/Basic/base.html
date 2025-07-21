@@ -1,0 +1,401 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ishort | {% block title %} {% endblock title %}</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'Basic/css/pricing.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'Basic/vendors/owl-carousel/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Basic/vendors/owl-carousel/css/owl.theme.default.css' %}">
+  <link rel="stylesheet" href="{% static 'Basic/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Basic/vendors/aos/css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'Basic/css/style.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Basic/css/services.css' %}">
+  <style>
+    .banner {
+      background-color: #222e3c;
+    }
+
+    .navbar {
+      background-color: #222e3c;
+      padding: 49px 0 63px;
+    }
+
+    .header-small .navbar {
+      background: #222e;
+      padding: 18px 0;
+      box-shadow: 0 0 30px 0 rgba(0, 0, 0, .2);
+    }
+
+    .navbar .navbar-menu-wrapper .navbar-nav .nav-link {
+      color: white;
+    }
+
+    .contact-details {
+      padding: 0rem 2.5rem;
+    }
+
+    .contact-details details .content {
+      padding-bottom: 10px;
+      color: #6e6e6e;
+    }
+
+    @media (max-width: 992px) {
+      .navbar .navbar-menu-wrapper.navbar-collapse {
+        position: fixed;
+        top: 0;
+        right: 0;
+        background: #222e;
+        z-index: 20;
+        height: 100vh;
+        padding: 50px 0;
+        width: 250px;
+        transform: translateX(100%);
+        transition: transform .25s ease-in-out;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .contact-details {
+        padding: 0rem 0rem;
+      }
+    }
+
+    details {
+      padding-bottom: 1.3rem;
+      /* border-bottom: 1px solid lightgrey; */
+    }
+
+    details * {
+      max-width: 65ch;
+    }
+
+    summary {
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      list-style-position: outside;
+
+      /*   list-style-type: "+"; */
+      /*   list-style-type: "\2795"; */
+      /*   list-style-image: url(https://icons.getbootstrap.com/assets/icons/plus-lg.svg); */
+      /*   list-style-image: url("data:image/svg+xml,<svg width='20' height='20' fill='red' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z'/></svg>"); */
+    }
+
+
+    summary::marker {
+      content: "+   ";
+      font-size: 2rem;
+      font-weight: normal;
+      text-align: center;
+      color: red;
+    }
+
+    details[open] summary::marker {
+      content: "–   ";
+    }
+
+    /* Fix: By default, block elements (e.g. a heading) nested inside the <summary> render below the marker, rather than keeping it inline: */
+    /* summary > * {
+  display: inline-block;
+}
+*/
+  </style>
+  {% block extra_head %}
+  
+  {% endblock extra_head %}
+</head>
+
+<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+  <header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+      <div class="container">
+        <div class="navbar-brand-wrapper d-flex w-100">
+          <img src="{% static 'Basic/images/logo.png' %}" height="50px" width="150px">
+          <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="mdi mdi-menu navbar-toggler-icon text-white"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+            <li class="d-flex align-items-center justify-content-between pl-4 pl-lg-0">
+              <div class="navbar-collapse-logo">
+                <img src="{% static 'Basic/images/logo.png' %}" height="30px" width="100px">
+              </div>
+              <button class="navbar-toggler close-button" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="mdi mdi-close navbar-toggler-icon pl-5 text-white"></span>
+              </button>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='{% url "core:Home" %}'>Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#features-section">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#digital-marketing-section">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='{% url "core:pricing" %}'>Plans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#faq">F.A.Q</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item btn-contact-us pl-4 pl-lg-0">
+              <a href='{% url "core:User_Dashboard" %}' class="btn btn-success text-white">&nbsp Dashboard &nbsp</a>
+            </li>
+            {% else %}
+            <li class="nav-item btn-contact-us pl-4 pl-lg-0">
+              <a href='{% url "user_auth:auth_login" %}' class="btn btn-success text-white">&nbsp Login &nbsp</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  {% block content %}
+  
+  {% endblock content %}
+  <section class="contact-details" id="contact-details-section">
+    <div class="row text-center text-md-left">
+      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+        <img src="{% static 'Basic/images/logo.png' %}" alt="" class="pb-2" style="width: 100px; height: 40px;">
+        <div class="pt-2">
+          <p class="text-muted m-0">support@ishort.in</p>
+          <p class="text-muted m-0">+91 75839-48750</p>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Cloudflare_Logo.svg/800px-Cloudflare_Logo.svg.png" alt="" class="pt-2" style="width: 100px; height: 40px;">
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+        <h5 class="pb-2">Get in Touch</h5>
+        <p class="text-muted">Don’t miss any updates of our new templates and extensions.!</p>
+        <form>
+          <input type="text" class="form-control" id="Email" placeholder="Email id">
+        </form>
+        <div class="pt-3">
+          <button class="btn btn-dark">Subscribe</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+        <h5 class="pb-2">Our Guidelines</h5>
+        <a href="terms&conditions.html">
+          <p class="m-0 pb-2">Terms</p>
+        </a>
+        <a href="privacy.html">
+          <p class="m-0 pt-1 pb-2">Privacy policy</p>
+        </a>
+        <p class="m-0 pt-1 pb-2 text-muted">Cookie Policy</p>
+        <p class="m-0 pt-1 text-muted">Discover</p>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+        <h5 class="pb-2">Our address</h5>
+        <p class="text-muted">Basirhat<br>N 24 PGS,743412</p>
+        <div class="d-flex justify-content-center justify-content-md-start mt-3">
+          <a href=""><i class="fa-brands fa-facebook fa-2x mx-2"></i></a>
+          <a href=""><i class="fa-brands fa-instagram fa-2x"></i></a>
+          <a href=""><i class="fa-brands fa-twitter fa-2x mx-2"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="border-top">
+    <p class="text-center text-muted pt-4">Copyright © 2023 | ishort.in All rights reserved.</p>
+  </footer>
+  <!-- Modal for Contact - us Button -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Contact Us</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="Name">Name</label>
+              <input type="text" class="form-control" id="Name" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="Email">Email</label>
+              <input type="email" class="form-control" id="Email-1" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label for="Message">Message</label>
+              <textarea class="form-control" id="Message" placeholder="Enter your Message"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="{% static 'Basic/vendors/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'Basic/vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'Basic/vendors/owl-carousel/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'Basic/vendors/aos/js/aos.js' %}"></script>
+<script src="{% static 'Basic/js/landingpage.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+crossorigin="anonymous"></script>
+<script>
+const withAnimation = true;
+const duration = 300; /*ms */
+const easing = "ease-in";
+
+class Accordion {
+  // const duration = 300;
+
+  constructor(el) {
+    // Store the <details> element
+    this.el = el;
+    // Store the <summary> element
+    this.summary = el.querySelector("summary");
+    // Store the <div class="content"> element
+    this.content = el.querySelector("summary + *");
+
+    // Store the animation object (so we can cancel it if needed)
+    this.animation = null;
+    // Store if the element is closing
+    this.isClosing = false;
+    // Store if the element is expanding
+    this.isExpanding = false;
+    // Detect user clicks on the summary element
+    this.summary.addEventListener("click", (e) => this.onClick(e));
+  }
+
+  onClick(e) {
+    // Stop default behaviour from the browser
+    e.preventDefault();
+    // Add an overflow on the <details> to avoid content overflowing
+    this.el.style.overflow = "hidden";
+    // Check if the element is being closed or is already closed
+    if (this.isClosing || !this.el.open) {
+      this.open();
+      // Check if the element is being openned or is already open
+    } else if (this.isExpanding || this.el.open) {
+      this.shrink();
+    }
+  }
+
+  shrink() {
+    // Set the element as "being closed"
+    this.isClosing = true;
+
+    // Store the current height of the element
+    const startHeight = `${this.el.offsetHeight}px`;
+    // Calculate the height of the summary
+    const endHeight = `${this.summary.offsetHeight}px`;
+
+    // If there is already an animation running
+    if (this.animation) {
+      // Cancel the current animation
+      this.animation.cancel();
+    }
+
+    // Start a WAAPI animation
+    this.animation = this.el.animate(
+      {
+        // Set the keyframes from the startHeight to endHeight
+        height: [startHeight, endHeight]
+      },
+      {
+        duration,
+        easing
+      }
+    );
+
+    // When the animation is complete, call onAnimationFinish()
+    this.animation.onfinish = () => this.onAnimationFinish(false);
+    // If the animation is cancelled, isClosing variable is set to false
+    this.animation.oncancel = () => (this.isClosing = false);
+  }
+
+  open() {
+    // Apply a fixed height on the element
+    this.el.style.height = `${this.el.offsetHeight}px`;
+    // Force the [open] attribute on the details element
+    this.el.open = true;
+    // Wait for the next frame to call the expand function
+    window.requestAnimationFrame(() => this.expand());
+  }
+
+  expand() {
+    // Set the element as "being expanding"
+    this.isExpanding = true;
+    // Get the current fixed height of the element
+    const startHeight = `${this.el.offsetHeight}px`;
+    // Calculate the open height of the element (summary height + content height)
+    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight
+      }px`;
+
+    // If there is already an animation running
+    if (this.animation) {
+      // Cancel the current animation
+      this.animation.cancel();
+    }
+
+    // Start a WAAPI animation
+    this.animation = this.el.animate(
+      {
+        // Set the keyframes from the startHeight to endHeight
+        height: [startHeight, endHeight]
+      },
+      {
+        duration,
+        easing
+      }
+    );
+    // When the animation is complete, call onAnimationFinish()
+    this.animation.onfinish = () => this.onAnimationFinish(true);
+    // If the animation is cancelled, isExpanding variable is set to false
+    this.animation.oncancel = () => (this.isExpanding = false);
+  }
+
+  onAnimationFinish(open) {
+    // Set the open attribute based on the parameter
+    this.el.open = open;
+    // Clear the stored animation
+    this.animation = null;
+    // Reset isClosing & isExpanding
+    this.isClosing = false;
+    this.isExpanding = false;
+    // Remove the overflow hidden and the fixed height
+    this.el.style.height = this.el.style.overflow = "";
+  }
+}
+
+if (withAnimation) {
+  document.querySelectorAll("details").forEach((el) => {
+    new Accordion(el);
+  });
+}
+
+</script>
+</body>
+
+</html>

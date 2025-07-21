@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Verification Success
+{% endblock title %}
+
+{% block content %}
+<script type="text/javascript">
+    var count = 10; // Timer
+    var redirect = "/"; // Target URL
+
+    function countDown() {
+      var timer = document.getElementById("timer"); // Timer ID
+      if (count > 0) {
+        count--;
+        timer.innerHTML = "This page will redirect in " + count + " seconds."; // Timer Message
+        setTimeout("countDown()", 1000);
+      } else {
+        // window.location.href = '#';
+        window.location.href = '{% url 'core:User_Dashboard' %}';
+      }
+    }
+</script>
+<div class="row vh-100">
+    <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+        <div class="d-table-cell align-middle">
+
+            <div class="text-center mt-4">
+                <i class="fa-solid fa-envelope-circle-check fa-7x" style="color: #222e3c"></i>
+                <h1 class="h2">Email successfully verified !</h1>
+                <div class="alert alert-success" role="alert"> your email has been verify successfully. you can easily login now. we will redirect you to the login page shortly</div>
+                <p class="mt-5 mb-3">© {% now "jS F Y" %} </p>
+            </div>
+            <div class="text-danger text-center mt-3">
+                <p id="timer">
+                  <script type="text/javascript">
+                    countDown();
+                  </script>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

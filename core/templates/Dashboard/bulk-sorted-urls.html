@@ -1,0 +1,112 @@
+{% extends "Dashboard/base.html" %}
+
+{% block title %}
+    Bulk Shorted Urls
+{% endblock title %}
+
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+        {% if message %}
+            <div class="alert alert-success" role="alert">
+                <strong>{{message}}</strong>
+            </div>
+        {% endif %}
+        <div>
+            <a href='{% url "core:export_bulk_url_short_csv" %}' class="btn text-white my-3 btn-lg"><i class="fa-solid fa-download"></i>&nbsp Export Data as CSV</a>
+        </div>
+        <div class="row"> 
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" style="overflow-x: scroll;">
+                        <table class="table mb-3">
+                            <thead>
+                              <tr>
+                                <th scope="col">Long Url</th>
+                                <th scope="col">Short Url</th>
+                                <th scope="col">Url Hit Count</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% if urls %}
+                                    {% for url in urls %}
+                                        <tr>
+                                            <td>{{url.long_url}}</td>
+                                            <td>{{url.short_url}}</td>
+                                            <td>{{url.url_hit_count}}</td>
+                                            <td>{{url.url_created_at}}</td>
+                                            <td>
+                                                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </a>
+                                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    <li>
+                                                        <button class="dropdown-item url-delete-button" data-table-id="{{ url.id }}"><i class="fa-solid fa-trash" style="color: #222e3c;"></i>&nbsp Delete</button>
+                                                    </li>
+                                                    {% comment %} <li><a class="dropdown-item" href="#">Something else here</a></li> {% endcomment %}
+                                                  </ul>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                                
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if urls.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ urls.previous_page_number }}" style="background-color: #222e3c;">Previous</a></li>
+                                {% endif %}
+                                    <li class="page-item"><a class="page-link" href="#">{{urls.number}}</a></li>
+                                {% if urls.has_next %}
+                                    <li class="page-item active"><a class="page-link" href="?page={{ urls.paginator.num_pages }}" style="background-color: #222e3c;">Next</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+{% endblock content %}
+
+{% block extra_body %}
+<script>
+    const deleteButtons = document.querySelectorAll('.url-delete-button')
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(){
+            const elementId = this.getAttribute('data-table-id');
+
+            if (elementId){
+                const url = '{% url "core:delete_bulk_url" %}?element_id='+elementId;
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this url again!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                        fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message === 'Element Deleted Successfully'){
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                    
+                });
+            }
+        });
+    });
+</script>
+{% endblock extra_body %}

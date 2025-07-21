@@ -1,0 +1,294 @@
+{% extends 'Dashboard/base.html' %}
+
+{% block title %}
+    Manage Urls
+{% endblock title %}
+
+
+{% block extra_head %}
+    <style>
+        .btn{
+        background: #222e3c;
+        }
+        .btn:hover{
+            background: #010408;
+        }
+    </style>
+{% endblock extra_head %}
+
+{% block content %}
+    <main class="content">
+        <div class="container-fluid p-0">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}}" role="alert">
+                        <strong>{{message}}</strong>
+                    </div>
+                {% endfor %}        
+            {% endif %}
+            {% comment %} <h1 class="h3 mb-3">Create Short Url</h1> {% endcomment %}
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Generate Short Urls</h5>
+                        </div>
+                            
+                        <div class="card-body">
+                            <div class="col-lg-8 col-md-6">
+                            </div>
+                            <form method="POST">
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-6 mb-3">
+                                        <div class="">
+                                          <label for="longurl" class="form-label"><b>Long url</b></label>
+                                          <textarea class="form-control" name="long_url" id="longurl" row="3" placeholder="Paste your long url here ..." required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <div class="">
+                                          <label for="urltitle" class="form-label"><b>Url title</b></label>
+                                          <textarea class="form-control" name="url_title" id="urltitle" row="3" placeholder="Url title or desc here ..." required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6">
+                                        <div class="d-grid gap-2">
+                                          <button type="submit" class="btn btn-primary btn-lg p-3" style="margin-top:28px"><i class="fa-solid fa-gears"></i>&nbsp &nbsp Generate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} <h1 class="h3 mb-3">Urls</h1> {% endcomment %}
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">All Short Urls</h5>
+                        </div>
+                        <div class="card-body" style="overflow-x: scroll;">
+                            <table class="table mb-3">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Url Title</th>
+                                    <th scope="col">Short Url</th>
+                                    <th scope="col">Long Url</th>
+                                    <th scope="col">Url Status (tab me)</th>
+                                    <th scope="col">Url Created At</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% if urls %}
+                                        
+                                        {% for url in urls %}
+                                        <tr>
+                                            <th scope="row">{{url.url_title}}</th>
+                                            <td><a href="https://ishort.in/{{url.short_url}}" target="_blank">{{url.short_url}}</a></td>
+                                            <td>{{url.long_url|truncatechars:50}}</td>
+                                            <td>
+                                                {% if url.status %}
+                                                <a href='{% url "core:status_update" url.id %}'><span class="badge bg-success"><i class="fa-solid fa-arrow-trend-up"></i>&nbsp Live</span></a>
+                                                
+                                                {% else %}
+                                                <a href='{% url "core:status_update" url.id %}'><span class="badge bg-danger"><i class="fa-solid fa-ban"></i>&nbsp Blocked</span></a>
+                                                
+                                                {% endif %}
+                                            </td>
+                                            <td>{{url.url_created_at}}</td>
+                                            <td>
+                                                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </a>
+                                                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    <li>
+                                                        <a class="dropdown-item copy-url-button" href="#" data-url="https://ishort.in/{{ url.short_url }}"><i class="fa-solid fa-copy" style="color: #222e3c;"></i>&nbsp Copy Url</a>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#urlUpdate" data-item-id="{{ url.id }}"><i class="fa-solid fa-file-pen" style="color: #222e3c;"></i>&nbsp Update</button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="dropdown-item url-delete-button" data-table-id="{{ url.id }}"><i class="fa-solid fa-trash" style="color: #222e3c;"></i>&nbsp Delete</button>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href='{% url "core:url_analytics" %}?url_id={{url.id}}'><i class="fa-solid fa-chart-pie" style="color: #222e3c;"></i>&nbsp Analytics</a>
+                                                    </li>
+                                                    {% comment %} <li><a class="dropdown-item" href="#">Something else here</a></li> {% endcomment %}
+                                                  </ul>
+                                            </td>
+                                          </tr>
+                                        {% endfor %}
+                                            
+                                    {% endif %}
+                                        
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    {% if urls.has_previous %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ urls.previous_page_number }}" style="background-color: #222e3c;">Previous</a></li>
+                                    {% endif %}
+                                        <li class="page-item"><a class="page-link" href="#">{{urls.number}}</a></li>
+                                    {% if urls.has_next %}
+                                        <li class="page-item active"><a class="page-link" href="?page={{ urls.paginator.num_pages }}" style="background-color: #222e3c;">Next</a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div class="modal fade" id="urlUpdate" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Update Url</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label for="short_url" class="form-label">Short Url</label>
+                          <input type="text" class="form-control form-control-lg" name="short_url" id="short_url" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="url_title" class="form-label">Url Title</label>
+                            <input type="text" class="form-control form-control-lg" name="url_title" id="url_title" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="long_url" class="form-label">Main Url</label>
+                            <textarea id="l_url" class="form-control form-control-lg" rows="3" readonly></textarea>
+                        </div>
+                        <div class="d-grid gap-2">
+                          <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-pen-to-square"></i>&nbsp Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Optional: Place to the bottom of scripts -->
+    
+{% endblock content %}
+
+
+{% block extra_body %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const copyButtons = document.querySelectorAll('.copy-url-button');
+    
+        copyButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const urlToCopy = this.getAttribute('data-url');
+                copyToClipboard(urlToCopy);
+            });
+        });
+    
+        function copyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            // You can provide user feedback here, e.g., show a tooltip or alert.
+        }
+    });    
+</script>
+<script>
+    const deleteButtons = document.querySelectorAll('.url-delete-button')
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(){
+            const elementId = this.getAttribute('data-table-id');
+
+            if (elementId){
+                const url = '{% url "core:delete_url" %}?element_id='+elementId;
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this url again!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                        fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message === 'Element Deleted Successfully'){
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                    
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#urlUpdate').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var itemId = button.data('item-id');
+            var modal = $(this);
+
+            // data retrive method
+            $.ajax({
+                url: "https://ishort.in/user/get_url_data/"+itemId,
+                datatype: "json",
+                success: function(data){
+                    modal.find('#short_url').val(data.short_url);
+                    modal.find('#url_title').val(data.url_title);
+                    modal.find('#l_url').val(data.long_url);
+                }
+            });
+            // data update method
+
+            $('#updateForm').submit(function(event){
+                event.preventDefault();
+                var formData = $(this).serialize();
+                console.log(formData)
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://ishort.in/user/update_url/'+itemId,
+                    data: formData,
+                    success: function(response){
+                        if (response.success){
+                            $('#urlUpdate').modal('hide');
+                            window.location.reload();
+                        }
+                        if (response.fail){
+                            $('#urlUpdate').modal('hide');
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+
+        });
+    });
+</script>
+{% endblock extra_body %}
+    
+    

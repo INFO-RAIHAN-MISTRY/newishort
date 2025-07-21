@@ -1,0 +1,188 @@
+{% extends 'Dashboard/base.html' %}
+{% block title %}
+Analytics of url
+{% endblock title %}
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Analytical view of --> <a href="https://ishort.in/{{url.short_url}}/" target="_blank">{{url.url_title}}</a></h1>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fa-solid fa-globe fa-3x"></i>
+                        <p class="mt-3 h2">Click's : {{url.url_hit_count}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p>{{url.long_url}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Real-Time</h5>
+                    </div>
+                    <div class="card-body px-4">
+                        <div id="world_map" style="height:350px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-xxl-3 d-flex">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Browser Usage</h5>
+                    </div>
+                    <div class="card-body d-flex">
+                        <div class="align-self-center w-100">
+                            <div class="py-3">
+                                <div class="chart chart-xs">
+                                    <canvas id="chartjs-dashboard-pie"></canvas>
+                                </div>
+                            </div>
+
+                            <table class="table mb-0">
+                                <tbody>
+                                    {% for data in browser %}
+                                        <tr>
+                                            <td>{{data.browser}}</td>
+                                            <td class="text-end">{{data.hit_count}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-lg-8 col-xxl-9 d-flex">
+                <div class="card flex-fill" style="overflow-x: scroll;">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Latest Clicks</h5>
+                    </div>
+                    <table class="table table-hover my-0 table-responsive">
+                        <thead>
+                            <tr>
+                                <th>IP ADDRESS</th>
+                                <th>COUNTRY</th>
+                                <th>CITY</th>
+                                <th>REGION</th>
+                                <th>BROESER</th>
+                                <th>OS</th>
+                                <th>CLICK TIME</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if analytical_url %}
+                                {% for url in analytical_url|slice:":5" %}
+                                    <tr>
+                                        <td>{{url.visitor_ip}}</td>
+                                        <td>{{url.country}}</td>
+                                        <td>{{url.city}}</td>
+                                        <td>{{url.region}}</td>
+                                        <td>{{url.browser}}</td>
+                                        <td>{{url.os}}</td>
+                                        <td>{{url.hit_time}}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+{% block extra_body %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch browser usage data from the server
+            const browserData = JSON.parse('{{ browser_data|escapejs }}');
+            
+            // Extract browser names and counts from the fetched data
+            const labels = browserData.map(entry => entry.browser);
+            const data = browserData.map(entry => entry.hit_count);
+    
+            // Pie chart
+            new Chart(document.getElementById("chartjs-dashboard-pie"), {
+                type: "pie",
+                data: {
+                    labels: labels,  // Browser names
+                    datasets: [{
+                        data: data,    // Browser counts
+                        backgroundColor: [
+                            window.theme.primary,
+                            window.theme.warning,
+                            window.theme.danger
+                        ],
+                        borderWidth: 5
+                    }]
+                },
+                options: {
+                    responsive: !window.MSInputMethodContext,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    cutoutPercentage: 75
+                }
+            });
+        });
+    </script>
+    <script>
+        //alert('{{marker}}');
+		document.addEventListener("DOMContentLoaded", function() {
+			var markers = [
+                
+			];
+            
+            {% for m in marker %}
+                markers.push({
+                    coords: [{{m.coordinates}}],
+                    name: "{{m.region}}"+" :"+{{m.hit_count}}
+                });
+            {% endfor %}
+              
+			var map = new jsVectorMap({
+				map: "world",
+				selector: "#world_map",
+				zoomButtons: true,
+				markers: markers,
+				markerStyle: {
+					initial: {
+						r: 9,
+						strokeWidth: 7,
+						stokeOpacity: .4,
+						fill: window.theme.primary
+					},
+					hover: {
+						fill: window.theme.primary,
+						stroke: window.theme.primary
+					}
+				},
+				zoomOnScroll: false
+			});
+			window.addEventListener("resize", () => {
+				map.updateSize();
+			});
+		});
+	</script>
+    {% endblock extra_body %}

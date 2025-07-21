@@ -1,0 +1,337 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+
+	<title>ishort |  {% block title %} {% endblock title %}</title>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	{% comment %} <link href="{% static 'User/css/app-light.css' %}" rel="stylesheet"> {% endcomment %}
+	<link href="{% static 'User/css/app.css' %}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    {% block extra_head %}
+        
+    {% endblock extra_head %}
+    
+	<style>
+		.btn{
+			background: #222e3c;
+		}
+		.btn:hover{
+			background: #010408;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="">
+					{% comment %} <span class="align-middle">ishort</span> {% endcomment %}
+					<span class="align-middle">ishort &nbsp({{request.user.subscription.get_subscription_details}})</span>
+				</a>
+				{% with request.resolver_match.url_name as url_name %}
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item {% if url_name == 'User_Dashboard' %} active {% endif %}">
+						<a class="sidebar-link" href="{% url 'core:User_Dashboard' %}"><i class="fa-solid fa-house"></i><span class="align-middle">Dashboard</span></a>
+					</li>
+					{% comment %} seperate {% endcomment %}
+					<li class="sidebar-header">
+						Urls
+					</li>
+
+					<li class="sidebar-item {% if url_name == 'Manage_Urls' %} active {% endif %}">
+						<a class="sidebar-link" href="{% url 'core:Manage_Urls' %}"><i class="fa-solid fa-link"></i><span class="align-middle">Manage Short Urls</span></a>
+					</li>
+					{% comment %} seperate {% endcomment %}
+					
+					<li class="sidebar-header">
+						QR Codes
+					</li>
+
+					<li class="sidebar-item {% if url_name == 'Manage_QR_codes' %} active {% endif %}">
+						<a class="sidebar-link" href="{% url 'core:Manage_QR_codes' %}"><i class="fa-solid fa-qrcode"></i><span class="align-middle">Manage QR codes</span></a>
+					</li>
+					{% comment %} seperate {% endcomment %}
+					{% if request.user.subscription.plan.name == 'Global' %}
+						<li class="sidebar-header">
+							Bulk Url Short
+						</li>
+
+						<li class="sidebar-item {% if url_name == 'Bulk_Url_Short' %} active {% endif %}">
+							<a class="sidebar-link" href="{% url 'core:Bulk_Url_Short' %}"><i class="fa-solid fa-file-excel"></i><span class="align-middle">Bulk Url Short</span></a>
+						</li>
+
+						<li class="sidebar-item {% if url_name == 'bulk_shorted_urls' %} active {% endif %}">
+							<a class="sidebar-link" href="{% url 'core:bulk_shorted_urls' %}"><i class="fa-solid fa-list"></i><span class="align-middle">Bulk Shorted Urls</span></a>
+						</li>
+					{% endif %}
+					
+					{% comment %} seperate {% endcomment %}
+					<li class="sidebar-header">
+						Plans
+					</li>
+
+					<li class="sidebar-item {% if url_name == 'Manage_Plan' %} active {% endif %}">
+						<a class="sidebar-link" href="{% url 'core:Manage_Plan' %}"><i class="fa-solid fa-bolt"></i><span class="align-middle">Manage Plans</span></a>
+					</li>
+					
+				</ul>
+
+				{% endwith %}
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+					<i class="hamburger align-self-center"></i>
+				</a>
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+								<i class="align-middle" data-feather="settings"></i>
+							</a>
+							<a class="nav-link d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+								{% if request.user.extra_data %}
+								<img src="{{request.user.extra_data}}" class="avatar img-fluid rounded me-1" alt="{{request.user.first_name}}" /> <span class="text-dark">{{request.user.first_name}}</span>
+								{% else %}
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAAB9CAMAAACyLvAAAAAAOVBMVEX///+dnZ3c3NyYmJjGxMXk5OTf39/V1dWhoaH7+/vZ2dmxsbHBwcGVlZWqqqrq6uq3t7f09PTLy8sTffwGAAAE0klEQVRoge2bYbu0EBCGQyES+f8/9kVbqbVSOzrvh30+7XUucTdmkJnTND/99BOIbGu76S8BtCJEEWkfh5iYseHHiIKIGh5l0Ma9ee9/SYLQwmAfG78fiBtXepJxBfAM8iEzTPOwstdDPL5H4I8gaLSMqw4ATk8gaPU2bGyFsTrCxHMAYXa6qgDiFAARYurZoTfZKVgZUDUz8HfXS0uxKuP34zkAfy2RCtcgOEZ/yv52XH5peAB8CkBQ2y2eSiQ4QJ+JAuKlkBGUrq3gXYEdV2DiJl1KaYwZvFpGKcYbAeI9MMHBBOPAhMA0EvaKCIiABdgtxkSyZciD6BhBwhK00SSQNjl6INjOC0jBTkP0bpx9BMA0ClkCuib00SRkADC2EQHomWlzA5IFwCxyRQNJIBYCMmQB6rniatyxywLsHIFXIbB5AIzjEwQkwfJmPD8H3ghmO79DEryWgzMv8GJ1CfKBcDQCJMHLD7g4BXAIVWIBz9E4npvAEdgXAegRYZoJTAnBEpFkgCRoSKkjBoSwP8Guyo2cV/pCghAPsDvTHAwloRAkfGsF++ES+iQloeAVbKBAAWZXvEYAfEbqQixcIYDdnJsJy8sEA+hHiw4xXrQkrrNgQWOhw8wvyoUAgYBjAXhU7Wn4ErhEMFIBGI6eQF4jcEd6SILGEbg1abxiA4ZBCdzp0DnCFQLfFphAcCILF2W3KvtNDNoGbsMr25y95uUTEKDRjqBVhVujp/VnGdD7LO1eSRRPgmvrYUHXxN4btRxgbgu7O598KiXtAArQTKVbwibo27TrRoC+R7psBPib3Ulc8URRI//WN+UAeuqhJyGo3Bdq3e/rYl+oYoDGnxYLRSsBlBNUuFi/SFAvzaP/eBJcQP7xJDSlRqgVCV59STzWNEGZEWqawOncCHVNUBCRFQPhpbPNoX72/cQT6ua9ZwKWJaiT791pshlnpPaBYpQJZxBs+4QNMBs+TISwbfuADZwnsjaZ6GCtk629HDTGfRRT65O8CQM4DQr2Du2oiatwt+xHs2LJu7oP9fD+gYATVNEMdL3dnke0LMi2mwafZ6pS/xAAyHa/ztq0AgF01ntRp+IbfmE/EyBVZXegap9joEkzzARVClG6RLotYYYXAXR2odmKsfZ5FvFmh2HNeEJHxFriss/0ULwPhdZuOVfYs9KaRExcqFEqxByWYku0+So5sNF7zbYsJkK5GzUaZf99sQjEN/wkDCdkV4gzpGtQjgChSohLpr+ZjcnKRB0kkR+u1Wh7bBooxtuFvGxMVGGGXlGqFoYKmW6OiLoDQc2H4ec+x6M3UGwy7R2EvJTwmBgnuf7QXJMUA9iz0kHnE8WGmAZUUAlJeDQVNGuA9RFUlP3S5uz11w63LaKgdHF+RJkzBi2LCkH3CMUAXipbSjsVv/8LIfhj2RRsD2Vqu0VxIeqiMTjh1acISp/pCytx9335eTivIH6TSplhqwa/Ih6ScNdF3gtZu+sGCLLdDRN4HU9R3b1u3GZ9LB8tf3R3ljwvR/8kXlBE/EnxRFwJ6IPk7Sfj0rnblvTd3H+UtCvB/U6+01rKejcOvidYVqYvnOk7rbUq5o8A3Kre/wh+BP8VgSLzP0GQVUpFf1HRn+KmSn3bdCHQ3V+p+tXfTz8V6x/4lkZBg6tfiwAAAABJRU5ErkJggg==" class="avatar img-fluid rounded me-1" alt="{{request.user.first_name}}" /> <span class="text-dark">{{request.user.first_name}}</span>
+								{% endif %}
+
+								<i class="fa-solid fa-caret-down mx-2"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="#"><i class="align-middle me-1 fa-solid fa-circle-dot text-success"></i> Active now</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{% url 'core:login_activities' %}"><i class="fa-solid fa-clock-rotate-left align-middle me-1"></i> login & activities</a>
+								<button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reset_pass"><i class="align-middle me-1 fa-solid fa-key"></i>&nbspReset Password</button>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href='{% url "user_auth:user_logout" %}'><i class="align-middle me-2 fa-solid fa-right-from-bracket"></i>Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+            
+            {% block content %}
+                
+            {% endblock content %}
+
+            
+            {% block extra_body %}
+                
+            {% endblock extra_body %}
+
+            <footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-12 text-center">
+							<p class="mb-0">
+								<a class="text-muted" href="#" target="_blank"><strong>ISHORT</strong></a> - <a class="text-muted" href="#" target="_blank"><strong>2023</strong></a> &copy; all right reserved.
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	{% comment %} Modal Handle code {% endcomment %}
+	<div class="modal fade" id="reset_pass" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Change Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action='{% url "core:reset_password" %}' method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="new_pass" class="form-label">New Password</label>
+                            <input type="password" name="new_pass" class="form-control form-control-lg" id="new_pass" required />
+                        </div>
+                        <div class="d-grid gap-2">
+                          <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-key"></i>&nbsp Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+			// Line chart
+			new Chart(document.getElementById("chartjs-dashboard-line"), {
+				type: "line",
+				data: {
+					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+					datasets: [{
+						label: "Sales ($)",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: [
+							100,
+							100,
+							100,
+							100,
+							100,
+							100,
+							100,
+							100,
+							100,
+							100,
+							100,
+							100
+						]
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+		});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			// Bar chart
+			new Chart(document.getElementById("chartjs-dashboard-bar"), {
+				type: "bar",
+				data: {
+					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+					datasets: [{
+						label: "This year",
+						backgroundColor: window.theme.primary,
+						borderColor: window.theme.primary,
+						hoverBackgroundColor: window.theme.primary,
+						hoverBorderColor: window.theme.primary,
+						data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+						barPercentage: .75,
+						categoryPercentage: .5
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					scales: {
+						yAxes: [{
+							gridLines: {
+								display: false
+							},
+							stacked: false,
+							ticks: {
+								stepSize: 20
+							}
+						}],
+						xAxes: [{
+							stacked: false,
+							gridLines: {
+								color: "transparent"
+							}
+						}]
+					}
+				}
+			});
+		});
+	</script>
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
+			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
+			document.getElementById("datetimepicker-dashboard").flatpickr({
+				inline: true,
+				prevArrow: "<span title=\"Previous month\">&laquo;</span>",
+				nextArrow: "<span title=\"Next month\">&raquo;</span>",
+				defaultDate: defaultDate
+			});
+		});
+	</script>
+
+	<script>
+		window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function(){
+				$(this).remove(); 
+			});
+		}, 4000);
+	</script>
+
+	<script src="{% static 'User/js/app.js' %}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+
+</html>
+                
+                

@@ -1,0 +1,138 @@
+{% extends 'Dashboard/base.html' %}
+
+
+{% block title %}
+    Manage QR codes
+{% endblock title %}
+
+{% block extra_head %}
+    <style>
+        .btn{
+        background: #222e3c;
+        }
+        .btn:hover{
+            background: #010408;
+        }
+    </style>
+{% endblock extra_head %}
+
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert {{message.tags}}" role="alert">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+                
+        {% endif %}
+        {% comment %} <h1 class="h3 mb-3">Create Short Url</h1> {% endcomment %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Generate QR Codes</h5>
+                    </div>
+                        
+                    <div class="card-body">
+                        <div class="col-lg-8 col-md-6">
+                        </div>
+                        <form action="" method="POST">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-5 col-md-6 mb-3">
+                                    <div class="">
+                                      <label for="longurl" class="form-label"><b>Long url</b></label>
+                                      <textarea class="form-control" name="long_url" id="longurl" row="3" placeholder="Paste your long url here ..." required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6">
+                                    <div class="">
+                                      <label for="urltitle" class="form-label"><b>Url title</b></label>
+                                      <textarea class="form-control" name="url_title" id="urltitle" row="3" placeholder="Url title or desc here ..." required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="d-grid gap-2">
+                                      <button type="submit" class="btn btn-primary btn-lg p-3" style="margin-top:28px"><i class="fa-solid fa-qrcode"></i>&nbsp &nbsp Generate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} <h1 class="h3 mb-3">Urls</h1> {% endcomment %}
+
+        <div class="row">
+            {% if qrs %}
+
+                    {% for qr in qrs %}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="plan-name">
+                                        <b>{{qr.title.capitalize}}</b>
+                                    </div>
+                                    <div class="plan-description">
+                                    </div>
+                                    <div class="plan-description specs">
+                                        <img src="{{ qr.qrcode.url }}" class="img-fluid rounded-top" alt="{{qr.title}}">
+                                    </div>
+                                    <div class="plan-cta">
+                                        <div style="display: flex; justify-content: space-around; gap:5px">
+                                            <button class="btn text-white btn-lg qr-delete-button" data-item-id="{{ qr.id }}" style="width:50%; background-color:#c23321"><i class="fa-solid fa-trash"></i>&nbsp Delete</button>
+                                            <a href="{{ qr.qrcode.url }}" class="btn text-white btn-lg" style="width:50%; background-color:#308d46" download><i class="fa-solid fa-download"></i>&nbsp Download</a>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% endif %}
+        </div>
+
+    </div>
+</main>
+{% endblock content %}
+
+{% block extra_body %}
+<script>
+    const deleteButtons = document.querySelectorAll('.qr-delete-button')
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(){
+            const elementId = this.getAttribute('data-item-id');
+            if (elementId){
+                const url = '{% url "core:delete_qr" %}?element_id='+elementId;
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this url again!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                        fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message === 'Element Deleted Successfully'){
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            }
+                        });
+                    }
+                    
+                })
+            }
+        });
+    });
+</script>
+{% endblock extra_body %}

@@ -1,0 +1,137 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.pricing-table {
+
+    padding: 40px 20px;
+}
+
+.pricing-table .details {
+    width: 90%;
+    max-width: 550px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.pricing-table .details .h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.pricing-table .details p {
+    font-size: 15px;
+}
+
+.pricing-table .grid {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 20px 0px;
+}
+
+.pricing-table .grid .box {
+    width: 250px;
+    text-align: center;
+    background: #fff;
+    padding: 25px;
+    border: 1px solid #d2d2d2;
+    border-radius: 7px;
+    margin-left: 13px;
+    cursor: pointer;
+}
+
+.pricing-table .grid .box .plan-name {
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.pricing-table .grid .box .value b {
+    font-size: 35px;
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-link.activee {
+    color: red;
+}
+
+.pricing-table .grid .box .items>* {
+    padding: 8px 0px;
+    /* border-bottom: 1px solid rgba(0,0,0,0.2); */
+    color: #555;
+}
+
+.items li {
+    list-style: none;
+    padding-top: 3px;
+}
+
+.items ul {
+    margin-top: 20px;
+}
+
+.pricing-table .grid .box .button button {
+    padding: 10px;
+    width: 90%;
+    margin: 25px 0px 0px;
+    background-color: #222e3c;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 550;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.pricing-table .grid .box.Pro {
+    transform: scale(1.1);
+    background: linear-gradient(to bottom,
+            #fff5ee, #e0bfb8);
+}
+
+.pricing-table .grid .box.Basic:hover {
+    transform: scale(1.1);
+    transition: all 0.6s;
+}
+
+.pricing-table .grid .box.master:hover {
+    transform: scale(1.1);
+    transition: all 0.6s;
+}
+
+@media (max-width:992px) {
+    .pricing-table .grid .box {
+        margin-left: 20px;
+    }
+
+    .pricing-table .master {
+        margin-top: 8px;
+    }
+}
+
+@media (max-width:768px) {
+    .pricing-table .grid .box {
+        width: 350px;
+        margin-bottom: 10px;
+    }
+
+    .pricing-table .grid .box .plan-name {
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .pricing-table {
+        padding: 40px 0px;
+    }
+
+    .pricing-table .grid {
+        padding: 0px;
+    }
+}

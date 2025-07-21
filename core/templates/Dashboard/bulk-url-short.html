@@ -1,0 +1,196 @@
+{% extends 'Dashboard/base.html' %}
+
+
+{% block title %}
+    Bulk Url Short
+{% endblock title %}
+
+
+{% block extra_head %}
+   <style>
+    .image-upload {
+        width: 100%;
+        height: 300px;
+        border: 1px dashed #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        position: relative;
+        text-align: center;
+        background: #f8f8f9;
+        color: #666;
+        overflow: hidden;
+    }
+    
+    .item-wrapper form img {
+        margin-bottom: 20px;
+        width: auto;
+        height: auto;
+        max-height: 400px;
+        width: auto;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    
+    .image-upload img {
+        height: 100%!important;
+        width: auto!important;
+        border-radius: 0px;
+        margin: 0 auto;
+    }
+    
+    
+    .image-upload input {
+        cursor: pointer;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 10;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    .item-wrapper input {
+        height: 43px;
+        line-height: 43px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+    /* CSS */
+    .blinking-text {
+        animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+   </style>
+{% endblock extra_head %}
+    
+
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        {% comment %} <h1 class="h3 mb-3">Blank Page</h1> {% endcomment %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <b class="text-primary">! important</b> Before uploading your CSV file here, there are two important rules you have to follow. You need to specify a special column name here, which is 'Long Url,' because our system first searches for this column name for the proceeding process. So, make sure that you have this column name in your CSV file.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Upload File</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="item">
+                            <form data-validation="true" id="upload-form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="item-inner">
+                                    <div class="item-content">
+                                        <div class="image-upload">
+                                          <label style="cursor: pointer; margin-top: 70px;" for="file_upload">
+                                            <div class="h-100">
+                                                   <div class="dplay-tbl">
+                                                    <div class="dplay-tbl-cell">
+                                                        <i class="fa fa-cloud-upload fa-5x" style="color: #222e3c;"></i>
+                                                        <h5><b>Choose Your .csv file to Upload</b></h5>
+                                                        <h6 class="mt-10 mb-70">Or Drop Your .csv Here</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="file" name="file" id="file_upload" class="image-input" accept=".csv" value="" multiple="false">
+                                            </label>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="item-2" style="display: none;">
+                            <form data-validation="true" id="upload-form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="item-inner">
+                                    <div class="item-content">
+                                        <div class="image-upload">
+                                            <div style="margin-top: 70px;">
+                                                <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                                <p class="h4 mt-3 blinking-text"><b>Do not refresh or close this page untill it's done.we are processing your file . . . . </b></p>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    {% comment %} <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                              <label for="" class="form-label">Upload .csv File</label>
+                              <input type="file" class="form-control" name="file" accept=".csv" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block extra_body %}
+<script>
+    $(document).ready(function () {
+        $('#file_upload').change(function () {
+            var formData = new FormData($('#upload-form')[0]);
+            var itemDiv = $('.item');
+            var itemDiv2 = $('.item-2');
+            
+            itemDiv.hide();
+            itemDiv2.show();
+    
+            $.ajax({
+                url: '{% url "core:Bulk_Url_Short" %}',  // Replace with the correct URL
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    console.log("Message: " + data.message);
+    
+                    var redirectUrl = '{% url "core:bulk_shorted_urls" %}';
+                    var message = encodeURIComponent(data.message);
+                    window.location.href = redirectUrl + '?message=' + message;
+
+                },
+                error: function (error) {
+                    console.error("AJAX Error:", error);
+                },
+                complete: function () {
+                    // Progress checking is already handled separately
+                }
+            });
+        });
+        
+    });
+    
+</script>
+{% endblock extra_body %}
+    
+    

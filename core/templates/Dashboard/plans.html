@@ -1,0 +1,192 @@
+{% extends 'Dashboard/base.html' %}
+
+{% block title %}
+    Manage Plans
+{% endblock title %}
+ 
+
+{% block extra_head %}
+    <style>
+    h1 {
+        text-align: center;
+        padding-bottom: 30px;
+        font-family: Montserrat;
+        font-weight: 700;
+        color: #323232;
+    }
+
+    .card {
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.08), 0 3px 6px 0 rgba(0, 0, 0, 0.03);
+        border-right: 1px #dde0e2 solid;
+        border-radius: 4px 4px 0 0;
+        position: relative;
+        background-color: white;
+        color: #56575b;
+        margin: 5px 0;
+
+        .plan-name {
+            padding: 13px 0;
+            border-bottom: 1px #eff0f2 solid;
+            text-align: center;
+            font-size: 16px;
+            color: #464c50;
+            font-family: "Open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .plan-description {
+            padding: 15px;
+            line-height: normal;
+            min-height: 175px;
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .plan-price sub {
+            text-transform: none;
+            font-size: 16px;
+            bottom: 0;
+        }
+
+        .plan-price {
+            color: #56575b;
+            font-family: "Open sans";
+            font-size: 34px;
+            text-transform: uppercase;
+            line-height: 50px;
+        }
+
+        sub {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+        .plan-description.specs {
+            min-height: 200px;
+            line-height: 20px;
+        }
+
+        .plan-cta {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 0 15px;
+            min-height: 95px;
+            &:hover a {
+            opacity: 0.8;
+            color: #fff;
+            text-decoration: none;
+            }
+        }
+        .button,
+        .button-primary {
+            background: #2a5bd7;
+            border-radius: 8px;
+            font-size: inherit;
+            color: white;
+            transition: background 100ms linear;
+            text-decoration: none;
+            line-height: normal;
+            outline: none !important;
+            padding: 0.6em 1em;
+        }
+    }
+    </style>
+{% endblock extra_head %}
+    
+
+{% block content %}
+    <main class="content">
+        <div class="container-fluid p-0">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">		
+                        <h5 class="card-title mb-0">Notice</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fa-solid fa-clock-rotate-left fa-3x my-2"></i>
+                        <p class="lead"> You currently Subscribe our <span class="text-success">{{request.user.subscription.plan}}</span> plan. Expiration date of your current plan is <span class="text-danger">{{request.user.subscription.expires_at}}</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="hr my-3">
+            {% comment %} <h1 class="h3 mb-3">Blank Page</h1> {% endcomment %}
+
+            <div class="row">
+                
+                {% if plans %}
+                    
+                    {% for plan in plans %}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="plan-name">
+                                        <b>{{plan.name.capitalize}}</b> 
+                                    </div>
+                                    <div class="plan-description">
+                                    <div class="plan-price month">
+                                        ₹ {{plan.price}}<sub> / Year</sub></div>
+                                        <p>{{plan.details}}</p>
+                                    </div>
+                                    <div class="plan-description specs">
+                                        {% if plan.number_url == 2147483647 %}
+                                            Unlimited Short Links
+                                        {% else %}
+                                            {{plan.number_url}} Short Links
+                                        {% endif %}
+                                        <br> 
+                                        {% if plan.number_qr == 2147483647 %}
+                                            Unlimited QR codes
+                                        {% else %}
+                                            {{plan.number_qr}} QR codes
+                                        {% endif %}
+                                        <br> 
+                                        {% if plan.api_access == True %}
+                                            Getting Api access
+                                        {% else %}
+                                            No Api access
+                                        {% endif %}
+                                        <br> 
+                                        {% if plan.bulk_url_short == True %}
+                                            Getting Bulk url short
+                                        {% else %}
+                                            No Bulk url short access
+                                        {% endif %}
+                                    </div>
+                                                                       
+                                    {% if subscription == plan.name %}
+                                        <div class="plan-cta">
+                                            <div class="d-grid gap-2">
+                                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-thumbs-up"></i>&nbsp &nbsp Subscribed</button>
+                                            </div>
+                                        </div>
+                                    {% elif plan.name != 'Basic' %}
+                                        <form action="{% url 'core:Check_Out' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" value="{{plan.id}}" name="plan_id">
+                                            <div class="plan-cta">
+                                                <div class="d-grid gap-2">
+                                                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-rocket"></i>&nbsp &nbsp Subscribe</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                        
+                {% endif %}
+                    
+            </div>
+
+        </div>
+    </main>
+{% endblock content %}

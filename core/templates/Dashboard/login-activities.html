@@ -1,0 +1,67 @@
+{% extends 'Dashboard/base.html' %}
+
+
+{% block title %}
+    Loging Activities
+{% endblock title %}
+
+{% block content %}
+<main class="content">
+    <div class="container-fluid p-0">
+        <h1 class="h3 mb-3"><b>Login Activities</b></h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" style="overflow-x: scroll;">
+                        <table class="table mb-3">
+                            <thead>
+                              <tr>
+                                <th scope="col">IP ADDRESS</th>
+                                <th scope="col">BROWSER</th>
+                                <th scope="col">OPERATING SYSTEM</th>
+                                <th scope="col">COUNTRY</th>
+                                <th scope="col">CITY</th>
+                                <th scope="col">LOGIN TIME</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                                
+                                {% if activities %}
+                                    
+                                    {% for activity in activities %}
+                                    <tr>
+                                        <td>{{activity.ip_address}}</td>
+                                        <td>{{activity.browser}}</td>
+                                        <td>{{activity.os}}</td>
+                                        <td>{{activity.city}}</td>
+                                        <td>{{activity.country}}</td>
+                                        <td>{{activity.login_time}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                        
+                                {% endif %}
+                                    
+   
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                {% if activities.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ activities.previous_page_number }}" style="background-color: #222e3c;">Previous</a></li>
+                                {% endif %}
+                                    <li class="page-item"><a class="page-link" href="#">{{activities.number}}</a></li>
+                                {% if activities.has_next %}
+                                    <li class="page-item active"><a class="page-link" href="?page={{ activities.paginator.num_pages }}" style="background-color: #222e3c;">Next</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+{% endblock content %}
+    

@@ -1,0 +1,215 @@
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+.custom-section {
+	padding: 2rem 1rem;
+}
+
+.section-services {
+	padding-top: 20px;
+	padding-bottom: 80px;
+	font-family: "Poppins", sans-serif;
+
+	color: #fff;
+
+}
+
+.section-services .header-section {
+	margin-bottom: 35px;
+}
+
+.section-services .header-section .title {
+	position: relative;
+	margin-bottom: 40px;
+	padding-bottom: 25px;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.section-services .header-section .title:before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 140px;
+	height: 1px;
+	background-color: #f70037;
+}
+
+.section-services .header-section .title:after {
+	content: "";
+	position: absolute;
+	bottom: -1px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 45px;
+	height: 3px;
+	background-color: #f70037;
+}
+
+.section-services .header-section .title span {
+	color: #f70037;
+}
+
+.section-services .header-section .description {
+	color: #6f6f71;
+}
+
+.section-services .single-service {
+	margin-top: 40px;
+	background-color: #ffffff;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
+	border-radius: 15px;
+}
+
+.section-services .single-service .part-1 {
+	padding: 40px 40px 25px;
+	border-bottom: 1px solid #babcc8;
+	display: flex;
+	gap: 20px;
+	justify-content: initial;
+	align-items: center;
+}
+
+.section-services .single-service .part-1 i {
+
+	font-size: 35px;
+	color: #f70037;
+}
+
+.section-services .single-service .part-1 .title {
+	font-size: 17px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: #1d1e23;
+	line-height: 1.8em;
+}
+
+.section-services .single-service .part-2 {
+	padding: 30px 40px 40px;
+}
+
+.section-services .single-service .part-2 .description {
+	margin-bottom: 22px;
+	color: #6f6f71;
+	font-size: 14px;
+	line-height: 1.8em;
+}
+
+.section-services .single-service .part-2 a {
+	color: #fff;
+	font-size: 14px;
+	text-decoration: none;
+	display: none;
+}
+
+.section-services .single-service .part-2 a i {
+	margin-right: 10px;
+	color: #f70037;
+}
+
+.read {
+	color: #1d1e23;
+}
+
+.part-2 h6 {
+	color: #1d1e23;
+}
+
+.hr-2 {
+	margin-top: 2.2rem;
+}
+
+.hr-3 {
+	margin-top: 2.3rem;
+}
+
+@media (max-width:1200px) {
+	.section-services .single-service .custom-part-1 {
+		padding-bottom: 49px;
+	}
+
+	.hr-1 {
+		margin-top: 5rem;
+	}
+
+	.hr-3 {
+		margin-top: 0.4rem;
+	}
+}
+
+@media (max-width:992px) {
+	.case-studies .row {
+		justify-content: center;
+	}
+
+	.section-services .single-service .custom-part-1 {
+		padding-bottom: 27px;
+	}
+
+	.hr-1 {
+		margin-top: 2.6rem;
+	}
+
+	.hr-3 {
+		margin-top: 2.6rem;
+	}
+}
+
+@media (max-width:350px) {
+
+	.section-services .single-service .part-1 i {
+		font-size: 27px;
+	}
+
+	.section-services .single-service .part-1 .title {
+		font-size: 15px;
+	}
+
+	.part-2 h6 {
+		font-size: 15px;
+	}
+
+	.section-services .single-service .part-1 {
+		padding: 20px 33px 19px;
+	}
+
+	.text-muted {
+		font-size: 15px;
+	}
+
+	.contact-details h1 {
+		font-size: 30px;
+	}
+
+	.contact-details summary::marker {
+		font-size: 1.5rem;
+	}
+
+	.contact-details summary {
+		font-size: 0.9rem;
+	}
+
+	.contact-details .content p {
+		font-size: 13px;
+	}
+
+	.contact-details .content ul {
+		font-size: 13px;
+	}
+}
+
+@media (max-width:550px) {
+	section {
+		padding: 0rem 0rem;
+	}
+}

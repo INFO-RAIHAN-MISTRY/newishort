@@ -1,0 +1,131 @@
+{% extends "Basic/base.html" %}
+
+{% block title %}
+Pricing Page
+{% endblock title %}
+
+{% block extra_head %}
+<style>
+  .banner {
+    background-color: #222e3c;
+  }
+
+  .navbar {
+    background-color: #222e3c;
+    padding: 20px 0 20px;
+  }
+
+  .header-small .navbar {
+    background: #222e;
+    padding: 18px 0;
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, .2);
+  }
+
+  .navbar .navbar-menu-wrapper .navbar-nav .nav-link {
+    color: white;
+  }
+
+  @media (max-width: 992px) {
+    .navbar .navbar-menu-wrapper.navbar-collapse {
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: #222e;
+      z-index: 20;
+      height: 100vh;
+      padding: 50px 0;
+      width: 250px;
+      transform: translateX(100%);
+      transition: transform .25s ease-in-out;
+    }
+  }
+</style>
+{% endblock extra_head %}
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="container">
+
+    <section>
+
+      <div class="pricing-table">
+        <div class="details">
+          <h2>Package that suit your plan</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse asperiores harum eligendi mollitia quos!
+            Sapiente fugiat cupiditate ex laboriosam, officiis temporibus</p>
+        </div>
+        <div class="grid">
+          <div class="box Basic">
+            <div class="plan-name">Basic</div>
+            <div class="value">
+              <b>₹0.0</b>
+              <span>/year</span>
+            </div>
+            <div class="items">
+              <ul>
+                <li>200 Short Links</li>
+                <li>50 Qr Cods</li>
+                <li>No Api Access</li>
+                <li>No Bulk Url Short Access</li>
+              </ul>
+            </div>
+            <div class="button">
+              <button><a href='{% url "user_auth:auth_register" %}' class="text-white">Subscribe</a></button>
+            </div>
+          </div>
+
+          <div class="box Pro">
+            <div class="plan-name">Premium</div>
+            <div class="value">
+              <b>₹99.0</b>
+              <span>/year</span>
+            </div>
+            <div class="items">
+              <ul>
+                <li>1500 Short Links</li>
+                <li>100 Qr Cods</li>
+                <li>Getting Api Access</li>
+                <li>No Bulk Url Short Access</li>
+              </ul>
+            </div>
+            <div class="button">
+              <button><a href='{% url "user_auth:auth_register" %}' class="text-white">Subscribe</a></button>
+            </div>
+          </div>
+
+          <div class="box master">
+            <div class="plan-name">Global</div>
+            <div class="value">
+              <b>₹199.0</b>
+              <span>/year</span>
+            </div>
+            <div class="items">
+              <ul>
+                <li>Unlimited Short Links</li>
+                <li>Unlimited Qr Cods</li>
+                <li>Getting Api Access</li>
+                <li>Getting Bulk Url Short Access</li>
+              </ul>
+            </div>
+            <div class="button">
+              <button><a href='{% url "user_auth:auth_register" %}' class="text-white">Subscribe</a></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="contact-us" id="contact-section">
+      <div class="contact-us-bgimage grid-margin">
+        <div class="pb-4">
+          <h4 class="px-3 px-md-0 m-0" data-aos="fade-down">Do you have any projects?</h4>
+          <h4 class="pt-1" data-aos="fade-down">Contact us</h4>
+        </div>
+        <div data-aos="fade-up">
+          <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Contact Us</button>
+        </div>
+      </div>
+    </section>
+{% endblock content %}
+

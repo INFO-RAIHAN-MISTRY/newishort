@@ -1,0 +1,414 @@
+{% extends "Basic/base.html" %}
+{% load static %}
+
+{% block title %}
+Home Page
+{% endblock title %}
+
+{% block content %}
+<div class="banner">
+  <div class="container">
+    <h1 class="font-weight-semibold text-white">Generating long and bulk url into <br>Beautiful short url.</h1>
+    <h6 class="font-weight-normal text-muted pb-3">URL Short helps you beautify, manage, and share any URL on or off
+      of your ishort.in website.</h6>
+    <div>
+      {% if request.user.is_authenticated %}
+        <a href='{% url "core:User_Dashboard" %}' class="btn btn-success mx-2 text-white"><b>Go to Dashboard</b></a>
+      {% else %}
+        <a href='{% url "user_auth:auth_register" %}' class="btn btn-success mx-2 text-white"><b>Getting Start</b></a>
+      {% endif %}
+    </div>
+    <img src="{% static 'Basic/images/Group171.svg' %}" alt="" class="img-fluid">
+  </div>
+</div>
+<div class="content-wrapper">
+  <div class="container">
+    <section class="features-overview" id="features-section">
+      <div class="content-header">
+        <h2>How does it works</h2>
+        <h6 class="section-subtitle text-muted">One theme that serves as an easy-to-use operational toolkit<br>that
+          meets customer's needs.</h6>
+      </div>
+      <div class="d-md-flex justify-content-between">
+        <div class="grid-margin d-flex justify-content-start">
+          <div class="features-width">
+            <img src="{% static 'Basic/images/Group12.svg' %}" alt="" class="img-icons">
+            <h5 class="py-3">Url<br>Shorts</h5>
+            <p class="text-muted">it's reduces the length of your web links so it's easier to remember and track as
+              well as your original URL remains unaffected.</p>
+
+          </div>
+        </div>
+        <div class="grid-margin d-flex justify-content-center">
+          <div class="features-width">
+            <img src="{% static 'Basic/images/Group7.svg' %}" alt="" class="img-icons">
+            <h5 class="py-3">Make payment<br>Or free</h5>
+            <p class="text-muted">it provides huge amount shorting urls with free of cost as well as user can also get
+              subscription from our website accordingly. </p>
+
+          </div>
+        </div>
+        <div class="grid-margin d-flex justify-content-end">
+          <div class="features-width">
+            <img src="{% static 'Basic/images/Group5.svg' %}" alt="" class="img-icons">
+            <h5 class="py-3">Manage<br>Urls</h5>
+            <p class="text-muted">user can also updating their urls as well as our website provides delete,analytics
+              portion that will be help to satisfaction.</p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="digital-marketing-service" id="digital-marketing-section">
+      <div class="row align-items-center">
+        <div class="col-12 col-lg-7 grid-margin grid-margin-lg-0" data-aos="fade-right">
+          <h3 class="m-0">We Offer any type of<br>Url short services!</h3>
+          <div class="col-lg-7 col-xl-6 p-0">
+            <p class="py-4 m-0 text-muted">Create short links that your visitors will easily be able to memorize and
+              that you can fit into Tweets, Facebook posts, and more.</p>
+            <p class="font-weight-medium text-muted">External Shortener can be slow when redirecting your visitors.
+              That damages customer satisfaction and slows down your site. Our plugin is the fastest way to link!</p>
+          </div>
+        </div>
+        <div class="col-12 col-lg-5 p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+          <img src="{% static 'Basic/images/Group1.png' %}" alt="" class="img-fluid">
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-12 col-lg-7 text-center flex-item grid-margin" data-aos="fade-right">
+          <img src="{% static 'Basic/images/Group2.png' %}" alt="" class="img-fluid">
+        </div>
+        <div class="col-12 col-lg-5 flex-item grid-margin" data-aos="fade-left">
+          <h3 class="m-0"> Also We offer extra features<br>For shorting urls.</h3>
+          <div class="col-lg-9 col-xl-8 p-0">
+            <p class="py-4 m-0 text-muted">Change settings to make your short links just the way you want them. Make
+              sure your links reflect your brand and stick in the memory!</p>
+            <p class="pb-2 font-weight-medium text-muted">Exported links from other tools in CSV format? You can
+              directly import all links from CSV file to URL Short.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-services case-studies custom-section" id="case-studies-section">
+
+      <div class="row justify-content-center text-center">
+        <div class="col-md-10 col-lg-8">
+          <div class="header-section">
+            <h2 class="title text-primary">Exclusive <span>Services</span></h2>
+            <p class="description">"Effortlessly streamline and simplify your website links with our user-friendly URL
+              shortener. Enhance the sharing experience by converting lengthy URLs into concise and memorable links,
+              making navigation and communication a breeze."</p>
+          </div>
+          <strong class="text-dark">What would you like to create ? </strong>
+        </div>
+      </div>
+      <div class="row">
+        <!-- Start Single Service -->
+        <div class="col-md-12 col-lg-4">
+          <div class="single-service">
+            <div class="part-1">
+              <i class="fas fa-link"></i>
+
+              <h3 class="title"> Link Management </h3>
+
+            </div>
+            <div class="part-2">
+
+              <div>
+                <h6>Popular Link Management Features</h6>
+                <ul class="text-muted">
+                  <li> Custom Short Links </li>
+                  <li> Link Tracking </li>
+                  <li> Link Expiry </li>
+                  <li> Link Editing </li>
+                  <li> Bulk Link Management </li>
+                  <li> Password Protection </li>
+                  <li> API Integration </li>
+                  <li> Social Media Integration </li>
+
+                </ul>
+              </div>
+
+              <hr class="hr-1">
+              <a href="#"><i class="fas fa-arrow-circle-right"></i><span class="read">Read More</span></a>
+            </div>
+          </div>
+        </div>
+        <!-- / End Single Service -->
+        <!-- Start Single Service -->
+        <div class="col-md-12 col-lg-4">
+          <div class="single-service">
+            <div class="part-1 custom-part-1">
+              <i class="fas fa-qrcode"></i>
+              <h3 class="title">Get QR Codes</h3>
+            </div>
+            <div class="part-2">
+
+              <div>
+                <h6>Popular QR Code Features</h6>
+                <ul class="text-muted">
+                  <li> Instant Access </li>
+                  <li> Dynamic QR Code </li>
+
+                  <li> Customizable QR Codes </li>
+                  <li> Multiple QR Code Formats </li>
+                  <li> Tracking and Monitoring</li>
+                  <li> Cost-Effective Marketing </li>
+                  <li> Password-Protected QR Codes </li>
+                  <li> QR Code Expiry </li>
+
+
+                </ul>
+
+              </div>
+
+              <hr class="hr-2">
+              <a href="#">
+                <i class="fas fa-arrow-circle-right"></i><span class="read">Read More</span></a>
+            </div>
+          </div>
+        </div>
+        <!-- / End Single Service -->
+        <!-- Start Single Service -->
+        <div class="col-md-12 col-lg-4">
+          <div class="single-service">
+            <div class="part-1">
+              <i class="fas fa-tape"></i>
+              <h3 class="title">Connect Through API</h3>
+            </div>
+            <div class="part-2">
+              <div>
+                <h6>Popular QR Code Features</h6>
+                <ul class="text-muted">
+                  <li> URL Shortening Endpoint </li>
+                  <li> Custom Short Links </li>
+                  <li> QR Code Generation </li>
+                  <li> Dynamic Links </li>
+                  <li> Link Editing and Updating</li>
+                  <li> Authentication and Security </li>
+                  <li> User Management </li>
+                  <li>Error Handling and Logging</li>
+
+
+                </ul>
+
+              </div>
+
+              <hr class="hr-3">
+              <a href="#"><i class="fas fa-arrow-circle-right"></i><span class="read">Read More</span></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="customer-feedback" id="feedback-section">
+      <div class="row">
+        <div class="col-12 text-center pb-5">
+          <h2>What our team members have to say</h2>
+          <h6 class="section-subtitle text-muted m-0">Lorem ipsum dolor sit amet, tincidunt vestibulum.</h6>
+        </div>
+        <div class="owl-carousel owl-theme grid-margin">
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/sourav.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Sourav Ghosh</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/rai.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creating, maintaining, testing, and debugging the entire backend of an
+                  application.it includes application logic,databases and so on .</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Raihan Mistry</h6>
+                <h6 class="customer-designation text-muted m-0">Backend developer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/abhishak.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creating, maintaining, testing, and debugging the entire backend of an
+                  application.it includes application logic,databases and so on .</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Abhishak Chowdhury</h6>
+                <h6 class="customer-designation text-muted m-0">Backend developer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/sou.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Soumyadip Debnath</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/bag.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Oindrilla Sarkar</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/cha.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creating, maintaining, testing, and debugging the entire backend of an
+                  application.it includes application logic,databases and so on .</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Chayan Das</h6>
+                <h6 class="customer-designation text-muted m-0">Backend developer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/nar.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Nourin nahar</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/mur.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Murad Mandal</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/pune.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Purnendu Sarkar</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/tri.png' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creates websites and applications using web languages such as HTML,
+                  CSS, and JavaScript that allow users to access and interact with the site.</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Triparna Chowdhury</h6>
+                <h6 class="customer-designation text-muted m-0">Frontend designer</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{% static 'Basic/images/face1.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                <p class="m-0 py-3 text-muted">creating, maintaining, testing, and debugging the entire backend of an
+                  application.it includes application logic,databases and so on .</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Subhojit Roy</h6>
+                <h6 class="customer-designation text-muted m-0">Backend developer</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="contact-details" id="faq">
+      <div class="container">
+        <h1 style="margin-bottom: 25px;">Frequently Asked Questions</h1>
+        <details>
+          <summary>Why do <em> we use URL shorteners</em>?</summary>
+          <div class="content">
+            <p>To convert long URLs in to short URLs. Using a short link with URL shorteners you can track the
+              analytics of the link i.e about the traffic generated through the link.</p>
+
+
+          </div>
+        </details>
+        <details>
+          <summary>What are Benefits of a short URL?</summary>
+          <div class="content">
+
+            <p>If you’re working in the digital space, chances are you’ve encountered URL shorteners but may not have
+              taken a deeper dive into their many benefits. By using a URL shortener, it’s possible to make long and
+              complex URLs easier to share with your followers without losing any of the original hyperlink data.</p>
+
+          </div>
+        </details>
+        <details>
+          <summary>What is a QR Code?</summary>
+          <div class="content">
+
+            <p>It is a machine-scannable image that can instantly be read using a Smartphone camera. Every QR code
+              consists of a number of black squares and dots which represent certain pieces of information. When your
+              Smartphone scans this code, it translate that information into something that can be easily understand
+              by humans.</p>
+
+          </div>
+        </details>
+        <details>
+          <summary>What is a custom URL shortener?</summary>
+          <div class="content">
+
+            <p>A custom, or branded URL shortener, is when you've connected your own custom domain to a URL shortener
+              which acts as a base for all the short links you create.</p>
+
+          </div>
+        </details>
+        <details>
+          <summary>Why choose ishort.in?</summary>
+          <div class="content">
+
+            <p>Whether you’re sharing one link or scan or millions, our platform was built to help you make every
+              point of connection between your content and your audience ignite action and make sure your security.
+            </p>
+
+          </div>
+        </details>
+      </div>
+
+      <br>
+    </section>
+    <section class="contact-us" id="contact-section">
+      <div class="contact-us-bgimage grid-margin">
+        <div class="pb-4">
+          <h4 class="px-3 px-md-0 m-0" data-aos="fade-down">Do you have any projects?</h4>
+          <h4 class="pt-1" data-aos="fade-down">Contact us</h4>
+        </div>
+        <div data-aos="fade-up">
+          <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Contact Us</button>
+        </div>
+      </div>
+    </section>
+{% endblock content %}

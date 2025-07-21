@@ -1,0 +1,144 @@
+{% extends 'Dashboard/base.html' %}
+{% load static %}
+
+{% block title %}
+    Check Out
+{% endblock title %}
+
+
+{% block extra_head %}
+    <style>
+        .green{
+            color: rgb(15, 207, 143);
+            font-weight: 680;
+        }
+        @media only screen and (max-width: 500px){
+            .custom_class{
+                padding: 30px;
+            }
+        }
+    </style>
+{% endblock extra_head %}
+    
+
+{% block content %}
+
+{% if plan %}
+<div class="container rounded bg-white custom_class">
+    <div class="row d-flex justify-content-center pb-5">
+        <div class="col-sm-5 col-md-5 ml-1">
+            <div class="py-4 d-flex flex-row">
+                <h5><span class=""></span><b>ELIGIBLE</b> | </h5><span class="pl-2">Pay</span>
+            </div>
+            <h4 class="green">{{plan.price}} &nbsp <sub>/year</sub></h4>
+            <h4>{{plan.name}}</h4>
+            <div class="d-flex pt-2">
+                
+            </div>
+            <p>Insurance claims and all necessary dependencies will be submitted to your insurer for the coverred portion of this order</p>
+            <div class="rounded bg-light d-flex">
+                <div class="p-2">Aetna-Open Access</div>
+                <div class="ml-auto p-2">OAP</div>
+            </div>
+            <hr>
+            <div class="pt-2">
+                <div class="d-flex">
+                    <div><p><b>Plan Details</b></p></div>
+                </div>
+                <p>
+                   {{plan.details}}
+                </p>
+                <ul>
+                    <li>Total Url : {{plan.number_url}}</li>
+                    <li>Total QR code : {{plan.number_qr}}</li>
+                    <li>API access : {{plan.api_access}}</li>
+                    <li>Bulk Url Short : {{plan.bulk_url_short}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-4 offset-md-1 mobile">
+            <div class="py-4 d-flex justify-content-end">
+                <h6><a href="{% url 'core:User_Dashboard' %}">Cancel and return to website</a></h6>
+            </div>
+            <div class="bg-light rounded d-flex flex-column">
+                <div class="p-2 ml-3"><h4>Order Recap</h4></div>
+                <div class="p-2 d-flex">
+                    <div class="col-8">Contracted Price</div>
+                    <div class="ml-auto">₹{{plan.price}}</div>
+                </div>
+                <div class="p-2 d-flex">
+                    <div class="col-8">Amount toward deductible</div>
+                    <div class="ml-auto">₹0.00</div>
+                </div>
+                <div class="p-2 d-flex">
+                    <div class="col-8">GST( 0% )</div>
+                    <div class="ml-auto">+ ₹0.00</div>
+                </div>
+                <div class="p-2 d-flex">
+                    <div class="col-8">Gateway Charges</div>
+                    <div class="ml-auto">+ ₹0.00</div>
+                </div>
+                <div class="border-top px-4 mx-3"></div>
+
+                <div class="border-top px-4 mx-3"></div>
+                <div class="p-2 d-flex pt-3">
+                    <div class="col-8"><b>Total</b></div>
+                    <div class="ml-auto"><b class="green">₹{{plan.price}}</b></div>
+                </div>
+                
+            </div>
+            <form action="{% url 'core:Payment_Success' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="plan_id" value="{{plan.id}}">
+                <div class="mt-3">
+                    <button id="rzp-button1" type="submit" class="btn btn-lg text-white"><i class="fa-solid fa-indian-rupee-sign"></i> &nbsp Proceed to payment</button>
+                </div>
+            </form>
+        </div>        
+    </div>
+</div>
+{% endif %}
+    
+{% endblock content %}
+
+
+{% block extra_body %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "rzp_test_LOQW4a93WLPyup", // Enter the Key ID generated from the Dashboard
+        "amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "ISHORT",
+        "description": "Test Transaction",
+        "image": "{% static 'favicon/apple-touch-icon.png' %}",
+        "order_id": "{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+            // var successurl = "{% url 'core:Payment_Success' %}/?razorpay_order_id"+payment.id+"&plan_id="+plan.id;
+            // window.location.href = "{% url 'core:Payment_Success' %}";
+            window.location.href = "{% url 'core:Payment_Success' %}?razorpay_order_id={{payment.id}}&plan_id={{plan.id}}";
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature);
+        },
+        "theme": {
+            "color": "#222e3c"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+{% endblock extra_body %}
+    
